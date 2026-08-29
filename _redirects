@@ -1,0 +1,2 @@
+# Netlify redirects - not needed for static single page but kept for SPA routing
+/*  /index.html  200
