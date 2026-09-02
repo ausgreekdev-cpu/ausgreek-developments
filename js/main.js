@@ -23,27 +23,49 @@ window.addEventListener('scroll', () => {
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Contact form handling
+// Contact form handling - works locally and on Netlify via fetch
 const form = document.querySelector('.contact-form');
 const statusEl = document.getElementById('formStatus');
 if (form) {
   form.addEventListener('submit', async (e) => {
-    // If running locally without Netlify, show demo success
-    const isNetlify = form.hasAttribute('data-netlify');
-    // Let Netlify handle if deployed, but also provide UX feedback
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      e.preventDefault();
-      if (statusEl) {
-        statusEl.textContent = '✓ Thanks! Your message has been received (demo). On Netlify this will email you.';
-        statusEl.className = 'form-status success';
-      }
-      form.reset();
-      return;
-    }
-    // On Netlify, allow default POST but show pending state
+    e.preventDefault();
     if (statusEl) {
       statusEl.textContent = 'Sending...';
       statusEl.className = 'form-status';
+    }
+    const formData = new FormData(form);
+    // Local demo - no network
+    const isLocal = ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
+    if (isLocal) {
+      setTimeout(() => {
+        if (statusEl) {
+          statusEl.textContent = '✓ Thanks! Your message has been received (demo mode). On the live site this will be delivered via Netlify Forms.';
+          statusEl.className = 'form-status success';
+        }
+        form.reset();
+      }, 600);
+      return;
+    }
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      });
+      if (res.ok) {
+        if (statusEl) {
+          statusEl.textContent = '✓ Thanks! Your message has been sent. We’ll be in touch within 24 hours.';
+          statusEl.className = 'form-status success';
+        }
+        form.reset();
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    } catch (err) {
+      if (statusEl) {
+        statusEl.textContent = '✗ Something went wrong. Please try again or email us directly at hello@ausgreek.dev';
+        statusEl.className = 'form-status error';
+      }
     }
   });
 }

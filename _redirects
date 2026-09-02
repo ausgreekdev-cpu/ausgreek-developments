@@ -1,2 +1,3 @@
-# Netlify redirects - not needed for static single page but kept for SPA routing
-/*  /index.html  200
+# No redirects needed for static site - Netlify will serve files directly
+# Uncomment below only if you need SPA fallback:
+# /*  /index.html  200
