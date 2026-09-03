@@ -63,7 +63,7 @@ if (form) {
       }
     } catch (err) {
       if (statusEl) {
-        statusEl.textContent = '✗ Something went wrong. Please try again or email us directly at hello@ausgreek.dev';
+        statusEl.textContent = '✗ Something went wrong. Please try again or email us directly at ausgreekdev@gmail.com';
         statusEl.className = 'form-status error';
       }
     }

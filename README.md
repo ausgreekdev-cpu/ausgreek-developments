@@ -41,7 +41,7 @@ netlify deploy --prod --dir=.
 ## Edit Content
 - `index.html` — all copy, services, portfolio
 - `css/style.css` — colours via CSS variables at top (`--navy`, `--gold`, `--blue`)
-- Contact email: search `hello@ausgreek.dev` in `index.html`
+- Contact email: `ausgreekdev@gmail.com` in `index.html` and `js/main.js`
 
 ## Contact Form
 Works automatically on Netlify (no backend). Submissions appear in Netlify Dashboard → Forms.
