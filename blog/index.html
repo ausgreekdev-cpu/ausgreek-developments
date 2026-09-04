@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Ausgreek Developments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .blog-header{padding:48px 0 24px;text-align:center}
+    .blog-header h1{font-family:'Space Grotesk',sans-serif;font-size:38px}
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-bottom:72px}
+    .blog-card{border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;background:#fff}
+    .blog-card .thumb{height:160px;display:grid;place-items:center;color:#fff;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+    .blog-card .body{padding:18px}
+    .blog-card .meta{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:6px}
+    .blog-card h3{font-size:17px;margin-bottom:6px}
+    .blog-card p{font-size:13px;color:#475569}
+    @media(max-width:980px){.blog-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../" class="logo"><span class="logo-mark">AD</span><span class="logo-text">Ausgreek<span>Developments</span></span></a>
+      <nav class="nav-links" id="navLinks" style="display:flex;gap:24px">
+        <a href="../#services">Services</a>
+        <a href="../#portfolio">Portfolio</a>
+        <a href="./">Blog</a>
+        <a href="../#contact" class="btn btn-primary">Get a Quote</a>
+      </nav>
+    </div>
+  </header>
+  <div class="container blog-header">
+    <span class="eyebrow">Insights</span>
+    <h1>Blog & Insights</h1>
+    <p style="color:#475569;margin-top:10px">Practical guides on websites, automation, and product building — no fluff.</p>
+  </div>
+  <div class="container blog-grid">
+    <a class="blog-card" href="#">
+      <div class="thumb" style="background:linear-gradient(135deg,#0f172a,#2563eb)">Building Fast Sites</div>
+      <div class="body">
+        <div class="meta">Sep 2026 • 5 min</div>
+        <h3>Why your business website should load in under 1 second</h3>
+        <p>Performance is conversion. How we hit 98+ Lighthouse scores with modern static hosting on Netlify.</p>
+      </div>
+    </a>
+    <a class="blog-card" href="#">
+      <div class="thumb" style="background:linear-gradient(135deg,#7c3aed,#ec4899)">Automation</div>
+      <div class="body">
+        <div class="meta">Sep 2026 • 6 min</div>
+        <h3>From spreadsheets to portals: automating operations</h3>
+        <p>How a custom dashboard saved a client 12+ hours/week and paid for itself in 2 months.</p>
+      </div>
+    </a>
+    <a class="blog-card" href="#">
+      <div class="thumb" style="background:linear-gradient(135deg,#0e7490,#06b6d4)">MVP Strategy</div>
+      <div class="body">
+        <div class="meta">Sep 2026 • 4 min</div>
+        <h3>The lean MVP roadmap: launch in 4–6 weeks</h3>
+        <p>Scope, prototype, build, iterate — our Discover→Design→Develop→Deliver flow explained.</p>
+      </div>
+    </a>
+  </div>
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> Ausgreek Developments</span>
+      <a href="../" style="color:#94a3b8">← Back to home</a>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>
