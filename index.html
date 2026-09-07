@@ -371,7 +371,7 @@
           </div>
         </div>
       </div>
-      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" enctype="multipart/form-data">
         <input type="hidden" name="form-name" value="contact" />
         <p class="hidden"><label>Don’t fill this out: <input name="bot-field" /></label></p>
         <div class="form-row">
@@ -397,6 +397,19 @@
         <div class="form-group">
           <label for="message">Tell us about your project</label>
           <textarea id="message" name="message" rows="5" placeholder="What are you looking to build? Any timeline or budget in mind?" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="attachment">Attachment (optional — brief, screenshots)</label>
+          <input type="file" id="attachment" name="attachment" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" />
+        </div>
+        <div class="form-group" style="background:rgba(255,255,255,0.08);padding:12px;border-radius:10px">
+          <label style="font-size:13px;color:#fde68a">Or book a time directly</label>
+          <p style="font-size:13px;color:#94a3b8;margin-top:4px">Prefer a call? Pick a time that suits you — we’ll confirm via email.</p>
+          <!-- Calendly inline - lazy loaded, replace ausgreekdev with your Calendly link -->
+          <div style="margin-top:10px;background:#fff;border-radius:10px;overflow:hidden">
+            <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener" class="btn btn-ghost btn-block" style="border:1px solid #e2e8f0;color:#0f172a">📅 Book 30 min discovery call →</a>
+            <p style="font-size:11px;color:#94a3b8;text-align:center;padding:6px">Calendly embed: replace link with your scheduling URL, or keep button as fallback (lazy, no iframe load until clicked).</p>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Send Message →</button>
         <p class="form-note">By submitting, you agree to be contacted about your project. No spam, ever.</p>
