@@ -70,4 +70,8 @@ if (form) {
   });
 }
 
+// PWA service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+}
 // Smooth scroll for browsers that need polyfill already handled via CSS
