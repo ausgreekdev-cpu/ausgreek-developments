@@ -1,11 +1,33 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager — Ausgreek Developments</title>
+  <link rel="icon" href="/assets/icon.svg" />
+  <style>
+    html,body{margin:0;padding:0;background:#0f172a}
+    #ausgreek-boot{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0f172a;color:#fff;font-family:Inter,system-ui,sans-serif;z-index:9999;transition:opacity .3s}
+    #ausgreek-boot .mark{width:56px;height:56px;border-radius:14px;background:#fff;color:#0f172a;display:grid;place-items:center;font-weight:800;font-size:22px;font-family:Inter,sans-serif}
+    #ausgreek-boot .name{font-weight:700;font-size:16px}
+    #ausgreek-boot .sub{color:#f59e0b;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+    #ausgreek-boot.hidden{opacity:0;pointer-events:none}
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <div id="ausgreek-boot">
+    <div class="mark">AD</div>
+    <div class="name">Ausgreek Developments</div>
+    <div class="sub">Content Manager</div>
+  </div>
+  <script src="https://unpkg.com/decap-cms@^3.4.0/dist/decap-cms.js"></script>
+  <script>
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        var boot = document.getElementById('ausgreek-boot');
+        if (boot) boot.classList.add('hidden');
+      }, 400);
+    });
+  </script>
 </body>
 </html>

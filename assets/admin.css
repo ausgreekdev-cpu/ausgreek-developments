@@ -1,0 +1,56 @@
+:root {
+  --primary: #0f172a;
+  --secondary: #1e293b;
+  --text-primary: #0f172a;
+  --background: #f8fafc;
+  --accent: #f59e0b;
+  --error: #dc2626;
+}
+
+/* Login / auth pages */
+.nc-githubAuthenticationPage,
+.nc-authenticationPage {
+  background: #0f172a !important;
+}
+.nc-githubAuthenticationPage-logo,
+.nc-authenticationPage-logo {
+  background: #fff !important;
+  border-radius: 14px !important;
+}
+.nc-githubAuthenticationPage-button,
+.nc-authenticationPage-button {
+  background: #f59e0b !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* Sidebar */
+.nc-app-main-container .nc-sidebar {
+  background: #0f172a !important;
+  color: #fff !important;
+}
+.nc-sidebar-heading a,
+.nc-sidebar-link {
+  color: #cbd5e1 !important;
+}
+.nc-sidebar-link.active,
+.nc-sidebar-link:hover {
+  background: #1e293b !important;
+  color: #fff !important;
+}
+
+/* Buttons */
+.nc-button,
+button[type="submit"] {
+  background: #0f172a !important;
+  color: #fff !important;
+}
+.nc-button.nc-button-active,
+.nc-button:hover {
+  background: #1e293b !important;
+}
+
+/* Header / toolbar accents */
+.nc-toolbar-section, .nc-app-header {
+  border-color: #e2e8f0 !important;
+}

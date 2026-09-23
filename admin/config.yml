@@ -2,15 +2,24 @@ backend:
   name: git-gateway
   branch: main
 
+local_backend: false
+
+site_url: https://ausgreek-developments.netlify.app
+display_url: https://ausgreek-developments.netlify.app
+logo_url: /assets/icon.svg
+show_preview_links: true
+custom_css: /assets/admin.css
+
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
   - name: "blog"
     label: "Blog"
-    folder: "blog"
+    folder: "content/blog"
     create: true
     slug: "{{slug}}"
+    format: "frontmatter"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
@@ -20,6 +29,7 @@ collections:
     label: "Portfolio"
     folder: "content/portfolio"
     create: true
+    format: "frontmatter"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
