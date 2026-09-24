@@ -432,10 +432,10 @@
         <div class="form-group" style="background:rgba(255,255,255,0.08);padding:12px;border-radius:10px">
           <label style="font-size:13px;color:#fde68a">Or book a time directly</label>
           <p style="font-size:13px;color:#94a3b8;margin-top:4px">Prefer a call? Pick a time that suits you — we’ll confirm via email.</p>
-          <!-- Calendly inline - lazy loaded, replace ausgreekdev with your Calendly link -->
+          <!-- Calendly inline embed -->
           <div style="margin-top:10px;background:#fff;border-radius:10px;overflow:hidden">
-            <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener" class="btn btn-ghost btn-block" style="border:1px solid #e2e8f0;color:#0f172a">📅 Book 30 min discovery call →</a>
-            <p style="font-size:11px;color:#94a3b8;text-align:center;padding:6px">Calendly embed: replace link with your scheduling URL, or keep button as fallback (lazy, no iframe load until clicked).</p>
+            <div class="calendly-inline-widget" data-url="https://calendly.com/ausgreekdev/30min" style="min-width:280px;height:540px"></div>
+            <p style="font-size:11px;color:#94a3b8;text-align:center;padding:6px;margin:0">Can’t see the calendar? <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener" style="color:#2563eb">Open it here →</a></p>
           </div>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Send Message →</button>
@@ -481,5 +481,6 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
