@@ -47,10 +47,10 @@ if (form) {
       return;
     }
     try {
+      if (!form.querySelector('#attachment')?.files.length) formData.delete('attachment');
       const res = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
+        body: formData
       });
       if (res.ok) {
         if (statusEl) {

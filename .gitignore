@@ -1,2 +1,7 @@
 # Local Netlify folder
 .netlify
+
+# opencode / ocx local config
+.ocx/
+.opencode/
+opencode.json
