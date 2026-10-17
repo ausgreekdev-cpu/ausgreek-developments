@@ -70,6 +70,22 @@ if (form) {
   });
 }
 
+// Calendly: load the third-party widget only when the visitor asks for it,
+// so it never counts against first-load performance
+const calendlyEmbed = document.getElementById('calendlyEmbed');
+if (calendlyEmbed) {
+  document.getElementById('calendlyLoad')?.addEventListener('click', () => {
+    const url = calendlyEmbed.getAttribute('data-url');
+    calendlyEmbed.innerHTML = '<div class="calendly-inline-widget" data-url="' + url + '" style="min-width:280px;height:540px"></div>';
+    if (!document.querySelector('script[src*="assets.calendly.com"]')) {
+      const s = document.createElement('script');
+      s.src = 'https://assets.calendly.com/assets/external/widget.js';
+      s.async = true;
+      document.body.appendChild(s);
+    }
+  }, { once: true });
+}
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

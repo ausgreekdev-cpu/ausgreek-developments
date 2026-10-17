@@ -434,9 +434,15 @@
         <div class="form-group" style="background:rgba(255,255,255,0.08);padding:12px;border-radius:10px">
           <label style="font-size:13px;color:#fde68a">Or book a time directly</label>
           <p style="font-size:13px;color:#94a3b8;margin-top:4px">Prefer a call? Pick a time that suits you — we’ll confirm via email.</p>
-          <!-- Calendly inline embed -->
+          <!-- Calendly: loaded on demand so the third-party widget never blocks first load -->
           <div style="margin-top:10px;background:#fff;border-radius:10px;overflow:hidden">
-            <div class="calendly-inline-widget" data-url="https://calendly.com/ausgreekdev/30min" style="min-width:280px;height:540px"></div>
+            <div id="calendlyEmbed" data-url="https://calendly.com/ausgreekdev/30min" style="min-width:280px;min-height:200px;display:grid;place-items:center;text-align:center;padding:28px 20px">
+              <div>
+                <p style="color:#0f172a;font-weight:700;font-size:15px;margin:0 0 6px">30-minute discovery call</p>
+                <p style="color:#64748b;font-size:13px;margin:0 0 16px">See available times — pick one and we’ll confirm by email.</p>
+                <button type="button" class="btn btn-primary" id="calendlyLoad">Show calendar →</button>
+              </div>
+            </div>
             <p style="font-size:11px;color:#94a3b8;text-align:center;padding:6px;margin:0">Can’t see the calendar? <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener" style="color:#2563eb">Open it here →</a></p>
           </div>
         </div>
@@ -483,6 +489,5 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
