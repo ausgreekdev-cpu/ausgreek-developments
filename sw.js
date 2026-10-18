@@ -1,4 +1,4 @@
-const VERSION = 'v3';
+const VERSION = 'v4';
 const PAGES_CACHE = 'ausgreek-pages-' + VERSION;
 const STATIC_CACHE = 'ausgreek-static-' + VERSION;
 const CURRENT_CACHES = [PAGES_CACHE, STATIC_CACHE];
@@ -15,7 +15,11 @@ const PRECACHE_STATIC = [
   '/css/style.css',
   '/js/main.js',
   '/manifest.json',
-  '/assets/icon.svg'
+  '/assets/icon.svg',
+  '/assets/icon-32.png',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
+  '/assets/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', e => {
