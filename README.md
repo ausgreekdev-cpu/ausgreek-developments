@@ -75,3 +75,24 @@ sw.js               service worker
 sitemap.xml         all public URLs
 deploy.sh           production deploy (see above)
 ```
+
+## Security headers / CSP maintenance
+`netlify.toml` sets security headers for all routes. `Content-Security-Policy-Report-Only` is currently enabled (not enforcing) so you can check browser console for violations after deploy — especially when clicking **Show calendar** (Calendly). Once clean, rename the header to `Content-Security-Policy` to enforce.
+
+**Important:** inline `<script>` / JSON-LD blocks on site pages are allowed by SHA-256 hashes in the CSP. If you edit any inline script or `application/ld+json` block (or add a new one), recompute its hash and update `netlify.toml`, otherwise the script will be reported/blocked. External scripts (`js/main.js`, Calendly) are allowed by source.
+
+Recompute all inline script hashes (outputs `sha256-...` values for the `script-src` list):
+```bash
+python3 - <<'PY'
+import hashlib, pathlib, re, base64
+files=['index.html','portfolio/krystal.html','portfolio/hd-mechanic.html','portfolio/lux.html',
+ 'blog/posts/why-fast-sites-win.html','blog/posts/from-spreadsheets-to-portal.html','blog/index.html']
+for f in files:
+    t=pathlib.Path(f).read_text()
+    for b in re.findall(r'<script type="application/ld\+json">\s*(.*?)\s*</script>',t,re.S):
+        print(f, 'sha256-'+base64.b64encode(hashlib.sha256(b.encode()).digest()).decode())
+    if f=='blog/index.html':
+        for b in re.findall(r'<script>(.*?)</script>',t,re.S):
+            print(f, 'sha256-'+base64.b64encode(hashlib.sha256(b.encode()).digest()).decode())
+PY
+```

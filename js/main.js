@@ -21,7 +21,8 @@ window.addEventListener('scroll', () => {
 });
 
 // Year
-document.getElementById('year').textContent = new Date().getFullYear();
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // Contact form handling - works locally and on Netlify via fetch
 const form = document.querySelector('.contact-form');

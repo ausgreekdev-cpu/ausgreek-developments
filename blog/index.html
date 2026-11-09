@@ -10,6 +10,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ausgreek-developments.netlify.app/blog/" />
   <meta property="og:image" content="https://ausgreek-developments.netlify.app/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Blog — Ausgreek Developments" />
   <meta name="twitter:description" content="Insights on web performance, automation and custom software from the Ausgreek Developments team." />
@@ -67,14 +69,14 @@
         <p>Double-entry and lost dockets — how a portal gives you one source of truth.</p>
       </div>
     </a>
-    <a class="blog-card" href="#">
+    <div class="blog-card" aria-label="Coming soon">
       <div class="thumb" style="background:linear-gradient(135deg,#0e7490,#06b6d4)">MVP Strategy</div>
       <div class="body">
-        <div class="meta">Sep 2026 • 4 min</div>
+        <div class="meta">Coming soon • 4 min</div>
         <h3>The lean MVP roadmap: launch in 4–6 weeks</h3>
         <p>Scope, prototype, build, iterate — our Discover→Design→Develop→Deliver flow explained.</p>
       </div>
-    </a>
+    </div>
   </div>
   <footer class="footer">
     <div class="container footer-bottom">
@@ -82,7 +84,7 @@
       <a href="../" style="color:#94a3b8">← Back to home</a>
     </div>
   </footer>
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>var y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();</script>
 
   <p style="text-align:center;font-size:12px;color:#94a3b8;padding:16px 0;margin:0">© Ausgreek Developments · <a href="../privacy.html" style="color:#64748b">Privacy</a> · <a href="../terms.html" style="color:#64748b">Terms</a></p>
 </body>
