@@ -59,6 +59,7 @@
   <meta name="theme-color" content="#0f172a" />
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
   <!-- Navigation -->
   <header class="navbar" id="navbar">
     <div class="container nav-container">
@@ -75,6 +76,7 @@
         <a href="#contact">Contact</a>
         <a href="#contact" class="btn btn-primary nav-cta">Get a Quote</a>
       </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -82,7 +84,7 @@
   </header>
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero" id="main">
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="eyebrow">Software Development • Australia</div>
@@ -495,6 +497,8 @@
     </div>
   </footer>
 
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+  <div class="offline-banner" id="offlineBanner">You're offline — some features may be unavailable</div>
   <script src="js/main.js"></script>
 </body>
 </html>

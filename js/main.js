@@ -87,6 +87,40 @@ if (calendlyEmbed) {
   }, { once: true });
 }
 
+// Dark mode toggle
+const themeToggle = document.getElementById('themeToggle');
+const rootEl = document.documentElement;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) rootEl.setAttribute('data-theme', savedTheme);
+else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) rootEl.setAttribute('data-theme', 'dark');
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const next = rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    if (next === 'light') rootEl.removeAttribute('data-theme'); else rootEl.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', next === 'light' ? 'light' : 'dark');
+    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+  themeToggle.textContent = rootEl.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+}
+
+// Back to top
+const backToTop = document.getElementById('backToTop');
+if (backToTop) {
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('show', window.scrollY > 400);
+  });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+// Offline indicator
+const offlineBanner = document.getElementById('offlineBanner');
+function updateOnline() {
+  if (offlineBanner) offlineBanner.classList.toggle('show', !navigator.onLine);
+}
+window.addEventListener('online', updateOnline);
+window.addEventListener('offline', updateOnline);
+updateOnline();
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

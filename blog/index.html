@@ -36,6 +36,7 @@
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
   <header class="navbar">
     <div class="container nav-container">
       <a href="../" class="logo"><span class="logo-mark">AD</span><span class="logo-text">Ausgreek<span>Developments</span></span></a>
@@ -43,11 +44,12 @@
         <a href="../#services">Services</a>
         <a href="../#portfolio">Portfolio</a>
         <a href="./">Blog</a>
-        <a href="../#contact" class="btn btn-primary">Get a Quote</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+         <a href="../#contact" class="btn btn-primary">Get a Quote</a>
       </nav>
     </div>
   </header>
-  <div class="container blog-header">
+  <div class="container blog-header" id="main">
     <span class="eyebrow">Insights</span>
     <h1>Blog & Insights</h1>
     <p style="color:#475569;margin-top:10px">Practical guides on websites, automation, and product building — no fluff.</p>
@@ -87,5 +89,7 @@
   <script>var y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();</script>
 
   <p style="text-align:center;font-size:12px;color:#94a3b8;padding:16px 0;margin:0">© Ausgreek Developments · <a href="../privacy.html" style="color:#64748b">Privacy</a> · <a href="../terms.html" style="color:#64748b">Terms</a></p>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+  <div class="offline-banner" id="offlineBanner">You're offline — some features may be unavailable</div>
 </body>
 </html>

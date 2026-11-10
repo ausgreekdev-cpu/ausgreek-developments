@@ -1,4 +1,4 @@
-const VERSION = 'v6';
+const VERSION = 'v7';
 const PAGES_CACHE = 'ausgreek-pages-' + VERSION;
 const STATIC_CACHE = 'ausgreek-static-' + VERSION;
 const CURRENT_CACHES = [PAGES_CACHE, STATIC_CACHE];
