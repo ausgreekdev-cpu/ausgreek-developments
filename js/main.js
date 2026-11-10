@@ -229,6 +229,96 @@ window.addEventListener('online', updateOnline);
 window.addEventListener('offline', updateOnline);
 updateOnline();
 
+// Quote estimator
+const estType = document.getElementById('estType');
+const estPages = document.getElementById('estPages');
+const estResult = document.getElementById('estResult');
+function updateEstimate() {
+  if (!estType || !estPages || !estResult) return;
+  const base = parseFloat(estType.value) || 0;
+  const mult = parseFloat(estPages.value) || 1;
+  const low = Math.round(base * mult);
+  const high = Math.round(base * mult * 1.4);
+  estResult.textContent = 'Estimated: from $' + low.toLocaleString() + ' – $' + high.toLocaleString();
+}
+if (estType) { estType.addEventListener('change', updateEstimate); estPages.addEventListener('change', updateEstimate); updateEstimate(); }
+
+// Multi-step contact form
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  const steps = contactForm.querySelectorAll('.form-step');
+  const dots = contactForm.querySelectorAll('.form-step-dot');
+  let current = 1;
+  function showStep(n) {
+    current = n;
+    steps.forEach(s => s.classList.toggle('active', parseInt(s.dataset.step) === n));
+    dots.forEach(d => {
+      const sn = parseInt(d.dataset.step);
+      d.classList.toggle('active', sn === n);
+      d.classList.toggle('done', sn < n);
+    });
+  }
+  contactForm.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => {
+    // basic validation of current step
+    const step = contactForm.querySelector('.form-step.active');
+    const inputs = step.querySelectorAll('input[required],textarea[required]');
+    let ok = true;
+    inputs.forEach(i => { if (!i.value.trim()) { i.reportValidity(); ok = false; } });
+    if (ok && current < steps.length) showStep(current + 1);
+  }));
+  contactForm.querySelectorAll('[data-prev]').forEach(b => b.addEventListener('click', () => {
+    if (current > 1) showStep(current - 1);
+  }));
+}
+
+// Hero typing effect
+const heroTyped = document.getElementById('heroTyped');
+if (heroTyped) {
+  const phrases = ['Websites that load in under 1s.', 'Portals that replace spreadsheets.', 'Apps your team will love.'];
+  let pi = 0, ci = 0, deleting = false;
+  function tick() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+      heroTyped.textContent = phrase.slice(0, ci + 1);
+      ci++;
+      if (ci === phrase.length) { deleting = true; setTimeout(tick, 1400); return; }
+    } else {
+      heroTyped.textContent = phrase.slice(0, ci - 1);
+      ci--;
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+    }
+    setTimeout(tick, deleting ? 40 : 70);
+  }
+  tick();
+}
+
+// Cookie consent banner
+const cookieBanner = document.getElementById('cookieBanner');
+const cookieAccept = document.getElementById('cookieAccept');
+const cookieDecline = document.getElementById('cookieDecline');
+if (cookieBanner && !localStorage.getItem('cookieChoice')) {
+  cookieBanner.classList.add('show');
+}
+if (cookieAccept) cookieAccept.addEventListener('click', () => { localStorage.setItem('cookieChoice','accepted'); cookieBanner.classList.remove('show'); });
+if (cookieDecline) cookieDecline.addEventListener('click', () => { localStorage.setItem('cookieChoice','declined'); cookieBanner.classList.remove('show'); });
+
+// Chat widget
+const chatToggle = document.getElementById('chatToggle');
+const chatPanel = document.getElementById('chatPanel');
+if (chatToggle && chatPanel) {
+  chatToggle.addEventListener('click', () => chatPanel.classList.toggle('show'));
+}
+
+// Sticky CTA show/hide on scroll
+const stickyCta = document.getElementById('stickyCta');
+if (stickyCta) {
+  window.addEventListener('scroll', () => {
+    stickyCta.style.transform = window.scrollY > 300 ? 'translateY(0)' : 'translateY(120%)';
+  });
+  stickyCta.style.transition = 'transform .25s';
+  stickyCta.style.transform = 'translateY(120%)';
+}
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

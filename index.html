@@ -90,6 +90,7 @@
         <div class="eyebrow">Software Development • Australia</div>
         <h1>Software solutions <span>built for your business.</span></h1>
         <p>We design and build fast, reliable websites, apps and custom software that help businesses grow. No templates, no bloat — just clean solutions tailored to you.</p>
+        <p class="hero-typed" id="heroTyped" aria-live="polite"></p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary btn-large">Start Your Project →</a>
           <a href="#portfolio" class="btn btn-ghost">View Our Work</a>
@@ -299,6 +300,28 @@
           <a href="#contact" class="btn btn-ghost btn-block">Get Custom Quote</a>
         </div>
       </div>
+      <div class="estimator" id="estimator">
+        <h3>Quick quote estimator</h3>
+        <div class="estimator-row">
+          <div>
+            <label for="estType">Project type</label>
+            <select id="estType">
+              <option value="1490">Starter website</option>
+              <option value="3900">Custom web app / portal</option>
+              <option value="8000">Mobile app (iOS+Android)</option>
+            </select>
+          </div>
+          <div>
+            <label for="estPages">Scope multiplier</label>
+            <select id="estPages">
+              <option value="1">Standard</option>
+              <option value="1.5">Large (more pages/features)</option>
+              <option value="2">Complex (integrations)</option>
+            </select>
+          </div>
+        </div>
+        <div class="estimator-result" id="estResult">Estimated: from $1,490</div>
+      </div>
       <p class="pricing-note">Indicative pricing in AUD — final quote after discovery. <a href="#contact">Tell us about your project</a> for an exact price.</p>
     </div>
   </section>
@@ -410,53 +433,65 @@
           </div>
         </div>
       </div>
-      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" enctype="multipart/form-data">
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" enctype="multipart/form-data" id="contactForm">
         <input type="hidden" name="form-name" value="contact" />
         <p class="hidden"><label>Don’t fill this out: <input name="bot-field" /></label></p>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required />
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="you@company.com" required />
-          </div>
+        <div class="form-steps-indicator">
+          <div class="form-step-dot active" data-step="1">1</div>
+          <div class="form-step-dot" data-step="2">2</div>
+          <div class="form-step-dot" data-step="3">3</div>
         </div>
-        <div class="form-group">
-          <label for="service">Service Interested In</label>
-          <select id="service" name="service">
-            <option>Web Development</option>
-            <option>Custom Software</option>
-            <option>App Development</option>
-            <option>UI/UX Design</option>
-            <option>Other / Not Sure</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="message">Tell us about your project</label>
-          <textarea id="message" name="message" rows="5" placeholder="What are you looking to build? Any timeline or budget in mind?" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="attachment">Attachment (optional — brief, screenshots)</label>
-          <input type="file" id="attachment" name="attachment" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" />
-        </div>
-        <div class="form-group" style="background:rgba(255,255,255,0.08);padding:12px;border-radius:10px">
-          <label style="font-size:13px;color:#fde68a">Or book a time directly</label>
-          <p style="font-size:13px;color:#94a3b8;margin-top:4px">Prefer a call? Pick a time that suits you — we’ll confirm via email.</p>
-          <!-- Calendly: loaded on demand so the third-party widget never blocks first load -->
-          <div style="margin-top:10px;background:#fff;border-radius:10px;overflow:hidden">
-            <div id="calendlyEmbed" data-url="https://calendly.com/ausgreekdev/30min" style="min-width:280px;min-height:200px;display:grid;place-items:center;text-align:center;padding:28px 20px">
-              <div>
-                <p style="color:#0f172a;font-weight:700;font-size:15px;margin:0 0 6px">30-minute discovery call</p>
-                <p style="color:#64748b;font-size:13px;margin:0 0 16px">See available times — pick one and we’ll confirm by email.</p>
-                <button type="button" class="btn btn-primary" id="calendlyLoad">Show calendar →</button>
-              </div>
+        <div class="form-step active" data-step="1">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
             </div>
-            <p style="font-size:11px;color:#94a3b8;text-align:center;padding:6px;margin:0">Can’t see the calendar? <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener noreferrer" style="color:#2563eb">Open it here →</a></p>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required />
+            </div>
           </div>
+          <div class="form-nav"><button type="button" class="btn btn-primary" data-next>Next →</button></div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Send Message →</button>
+        <div class="form-step" data-step="2">
+          <div class="form-group">
+            <label for="service">Service Interested In</label>
+            <select id="service" name="service">
+              <option>Web Development</option>
+              <option>Custom Software</option>
+              <option>App Development</option>
+              <option>UI/UX Design</option>
+              <option>Other / Not Sure</option>
+            </select>
+          </div>
+          <div class="form-nav"><button type="button" class="btn btn-ghost" data-prev>← Back</button><button type="button" class="btn btn-primary" data-next>Next →</button></div>
+        </div>
+        <div class="form-step" data-step="3">
+          <div class="form-group">
+            <label for="message">Tell us about your project</label>
+            <textarea id="message" name="message" rows="5" placeholder="What are you looking to build? Any timeline or budget in mind?" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="attachment">Attachment (optional — brief, screenshots)</label>
+            <input type="file" id="attachment" name="attachment" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" />
+          </div>
+          <div class="form-group" style="background:rgba(255,255,255,0.08);padding:12px;border-radius:10px">
+            <label style="font-size:13px;color:#fde68a">Or book a time directly</label>
+            <p style="font-size:13px;color:#94a3b8;margin-top:4px">Prefer a call? Pick a time that suits you — we’ll confirm via email.</p>
+            <div style="margin-top:10px;background:#fff;border-radius:10px;overflow:hidden">
+              <div id="calendlyEmbed" data-url="https://calendly.com/ausgreekdev/30min" style="min-width:280px;min-height:200px;display:grid;place-items:center;text-align:center;padding:28px 20px">
+                <div>
+                  <p style="color:#0f172a;font-weight:700;font-size:15px;margin:0 0 6px">30-minute discovery call</p>
+                  <p style="color:#64748b;font-size:13px;margin:0 0 16px">See available times — pick one and we’ll confirm by email.</p>
+                  <button type="button" class="btn btn-primary" id="calendlyLoad">Show calendar →</button>
+                </div>
+              </div>
+              <p style="font-size:11px;color:#94a3b8;text-align:center;padding:6px;margin:0">Can’t see the calendar? <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener noreferrer" style="color:#2563eb">Open it here →</a></p>
+            </div>
+          </div>
+          <div class="form-nav"><button type="button" class="btn btn-ghost" data-prev>← Back</button><button type="submit" class="btn btn-primary">Send Message →</button></div>
+        </div>
         <p class="form-note">By submitting, you agree to be contacted about your project. No spam, ever.</p>
         <div id="formStatus" class="form-status"></div>
       </form>
@@ -500,6 +535,22 @@
 
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
   <div class="offline-banner" id="offlineBanner">You're offline — some features may be unavailable</div>
+  <div class="sticky-cta" id="stickyCta">
+    <a href="#contact" class="btn btn-primary">Get a Quote</a>
+    <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Book a call</a>
+  </div>
+  <div class="cookie-banner" id="cookieBanner">
+    <span>We use cookies for analytics and a better experience.</span>
+    <a href="privacy.html">Learn more</a>
+    <button class="btn btn-primary" id="cookieAccept">Accept</button>
+    <button class="btn btn-ghost" id="cookieDecline">Decline</button>
+  </div>
+  <div class="chat-widget" id="chatWidget">
+    <button class="chat-toggle" id="chatToggle" aria-label="Open chat">💬</button>
+    <div class="chat-panel" id="chatPanel">
+      <p>Chat coming soon. Email us at <a href="mailto:ausgreekdev@gmail.com">ausgreekdev@gmail.com</a> or book a call.</p>
+    </div>
+  </div>
   <script src="js/main.js"></script>
 </body>
 </html>
