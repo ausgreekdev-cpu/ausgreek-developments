@@ -156,6 +156,19 @@ if (form) {
       return;
     }
     try {
+      // 1) Server-side handling: spam/rate-limit/email notify/auto-responder
+      const jsonFields = {};
+      for (const [k, v] of formData.entries()) { if (typeof v === 'string') jsonFields[k] = v; }
+      const fnRes = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jsonFields)
+      });
+      if (!fnRes.ok) {
+        const err = await fnRes.json().catch(() => ({}));
+        throw new Error(err.error || 'Function error');
+      }
+      // 2) Forward to Netlify Forms for dashboard capture (attachment included)
       if (!form.querySelector('#attachment')?.files.length) formData.delete('attachment');
       const res = await fetch('/', {
         method: 'POST',

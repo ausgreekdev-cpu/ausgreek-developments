@@ -51,8 +51,17 @@ visitor clicks "Show calendar". Keep it that way — eagerly embedding the
 widget dropped Lighthouse Performance from 96 to 51.
 
 ## Contact Form
-Netlify Forms, no backend. Submissions (including attachments) appear in
-Netlify Dashboard → Forms. Add a notification email in Netlify → Forms → Settings.
+Hybrid: submissions are validated/rate-limited by the `netlify/functions/contact.js` function
+(spam honeypot, optional reCAPTCHA, auto-responder + notification email via Resend) and
+also captured by Netlify Forms (dashboard + attachments).
+
+Env vars (set in Netlify → Site settings → Environment):
+- `RESEND_API_KEY` (optional) — enables notification + auto-responder emails
+- `CONTACT_EMAIL` (optional, default ausgreekdev@gmail.com)
+- `RECAPTCHA_SECRET` (optional) — enables reCAPTCHA verification
+- `SITE_URL` (optional) — site base URL for forwarding to Netlify Forms
+
+Without `RESEND_API_KEY`, the function still succeeds and Netlify Forms captures the submission.
 Fields: name, email, service, message, optional attachment (pdf/png/jpg/doc).
 
 ## PWA / service worker
