@@ -401,6 +401,26 @@ if (langBtn && langMenu) {
   langBtn.textContent = saved.toUpperCase();
 }
 
+// Newsletter signup
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = (document.getElementById('newsletterEmail').value || '').trim();
+    const status = document.getElementById('newsletterStatus');
+    if (status) status.textContent = 'Subscribing...';
+    try {
+      const res = await fetch('/.netlify/functions/newsletter', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (!res.ok) throw new Error('fail');
+      if (status) status.textContent = '✓ Subscribed!';
+      newsletterForm.reset();
+    } catch (e) { if (status) status.textContent = '✗ Could not subscribe.'; }
+  });
+}
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

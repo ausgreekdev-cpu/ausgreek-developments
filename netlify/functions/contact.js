@@ -89,6 +89,18 @@ exports.handler = async (event) => {
     await sendEmail(apiKey, email, 'Thanks for contacting Ausgreek Developments', auto, to).catch(() => {});
   }
 
+  // CRM webhook (best-effort)
+  const crmUrl = process.env.CRM_WEBHOOK_URL;
+  if (crmUrl) {
+    try {
+      await fetch(crmUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, service, message, source: 'ausgreek-contact' }),
+      });
+    } catch (e) { /* ignore */ }
+  }
+
   // Forward to Netlify Forms for dashboard capture (best-effort)
   if (siteUrl) {
     try {

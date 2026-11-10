@@ -60,6 +60,10 @@ Env vars (set in Netlify → Site settings → Environment):
 - `CONTACT_EMAIL` (optional, default ausgreekdev@gmail.com)
 - `RECAPTCHA_SECRET` (optional) — enables reCAPTCHA verification
 - `SITE_URL` (optional) — site base URL for forwarding to Netlify Forms
+- `CRM_WEBHOOK_URL` (optional) — webhook fired on new contact submission
+- `NEWSLETTER_PROVIDER` (optional) — 'mailchimp' or 'convertkit'
+- `NEWSLETTER_API_KEY`, `NEWSLETTER_LIST_ID` / `NEWSLETTER_FORM_ID` (optional)
+- `CALENDLY_TOKEN` (optional) — Calendly personal access token for availability proxy
 
 Without `RESEND_API_KEY`, the function still succeeds and Netlify Forms captures the submission.
 Fields: name, email, service, message, optional attachment (pdf/png/jpg/doc).
