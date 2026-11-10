@@ -15,4 +15,7 @@ trap 'rm -rf "$tmp"' EXIT
 git archive -o "$tmp/site.tar" HEAD
 tar -xf "$tmp/site.tar" -C "$tmp"
 
+# Bundle local dependencies for Netlify Functions (not committed)
+if [ -d node_modules ]; then cp -a node_modules "$tmp/node_modules"; fi
+
 netlify deploy --dir="$tmp" --prod
