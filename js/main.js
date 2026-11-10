@@ -24,6 +24,114 @@ window.addEventListener('scroll', () => {
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// Portfolio filter
+const portfolioFilter = document.getElementById('portfolioFilter');
+if (portfolioFilter) {
+  const cards = document.querySelectorAll('.portfolio-card');
+  portfolioFilter.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      portfolioFilter.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c => {
+        const cat = c.dataset.category || '';
+        c.classList.toggle('hidden', f !== 'all' && cat !== f);
+      });
+    });
+  });
+}
+
+// Blog search + tag filter
+const blogSearch = document.getElementById('blogSearch');
+const blogTags = document.querySelectorAll('.blog-tag');
+if (blogSearch || blogTags.length) {
+  const cards = document.querySelectorAll('.blog-card');
+  function applyBlogFilter() {
+    const q = (blogSearch ? blogSearch.value : '').toLowerCase().trim();
+    const activeTag = document.querySelector('.blog-tag.active');
+    const tag = activeTag ? activeTag.dataset.tag : 'all';
+    cards.forEach(c => {
+      const text = (c.textContent || '').toLowerCase();
+      const ctag = c.dataset.tag || '';
+      const matchQ = !q || text.includes(q);
+      const matchT = tag === 'all' || ctag === tag;
+      c.classList.toggle('hidden', !(matchQ && matchT));
+    });
+  }
+  if (blogSearch) blogSearch.addEventListener('input', applyBlogFilter);
+  blogTags.forEach(t => t.addEventListener('click', () => {
+    blogTags.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    applyBlogFilter();
+  }));
+}
+
+// Reading progress
+const rp = document.getElementById('readingProgress');
+if (rp) {
+  function updateProgress() {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop || document.body.scrollTop;
+    const total = (h.scrollHeight - h.clientHeight) || 1;
+    rp.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  }
+  window.addEventListener('scroll', updateProgress);
+  updateProgress();
+}
+
+// Syntax highlighting (lightweight)
+function highlightCode() {
+  document.querySelectorAll('pre code, .code-block').forEach(el => {
+    if (el.dataset.highlighted) return;
+    let html = el.innerHTML
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // comments
+    html = html.replace(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g, '<span class="token comment">$1</span>');
+    // strings
+    html = html.replace(/(&quot;[^&]*?&quot;|'[^']*?'|`[^`]*?`)/g, '<span class="token string">$1</span>');
+    // keywords
+    html = html.replace(/\b(const|let|var|function|return|if|else|for|while|class|import|export|from|await|async|new|this|true|false|null|undefined)\b/g, '<span class="token keyword">$1</span>');
+    // numbers
+    html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="token number">$1</span>');
+    el.innerHTML = html;
+    el.dataset.highlighted = '1';
+  });
+}
+highlightCode();
+
+// Testimonial carousel
+const track = document.getElementById('testimonialTrack');
+const prevBtn = document.getElementById('carouselPrev');
+const nextBtn = document.getElementById('carouselNext');
+const dotsWrap = document.getElementById('carouselDots');
+if (track) {
+  const slides = track.querySelectorAll('.testimonial-slide');
+  let idx = 0;
+  const perView = window.innerWidth >= 981 ? 3 : 1;
+  const maxIdx = Math.max(0, slides.length - perView);
+  function renderDots() {
+    if (!dotsWrap) return;
+    dotsWrap.innerHTML = '';
+    for (let i = 0; i <= maxIdx; i++) {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === idx ? ' active' : '');
+      d.addEventListener('click', () => { idx = i; update(); });
+      dotsWrap.appendChild(d);
+    }
+  }
+  function update() {
+    const pct = (100 / perView) * idx;
+    track.style.transform = 'translateX(-' + pct + '%)';
+    if (dotsWrap) dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+  if (prevBtn) prevBtn.addEventListener('click', () => { idx = Math.max(0, idx - 1); update(); });
+  if (nextBtn) nextBtn.addEventListener('click', () => { idx = Math.min(maxIdx, idx + 1); update(); });
+  renderDots();
+  update();
+  // auto-advance
+  setInterval(() => { idx = idx >= maxIdx ? 0 : idx + 1; update(); }, 5000);
+}
+
 // Contact form handling - works locally and on Netlify via fetch
 const form = document.querySelector('.contact-form');
 const statusEl = document.getElementById('formStatus');

@@ -213,8 +213,14 @@
         <h2>Built with care. Shipped with pride.</h2>
         <p>A preview of the types of projects we deliver. Your project could be next.</p>
       </div>
+      <div class="filter-bar" id="portfolioFilter">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="e-commerce">E-Commerce</button>
+        <button class="filter-btn" data-filter="crm">CRM</button>
+        <button class="filter-btn" data-filter="portal">Portal</button>
+      </div>
       <div class="portfolio-grid">
-        <a class="portfolio-card" href="portfolio/krystal.html">
+        <a class="portfolio-card" data-category="e-commerce" href="portfolio/krystal.html">
           <div class="pc-image gradient1"><span>Krystal's Flower Kreations</span></div>
           <div class="pc-body">
             <h3>Krystal’s Flower Kreations — E-Commerce</h3>
@@ -222,7 +228,7 @@
             <div class="tags"><span>E-Commerce</span><span>Case Study</span><span>Live →</span></div>
           </div>
         </a>
-        <a class="portfolio-card" href="portfolio/hd-mechanic.html">
+        <a class="portfolio-card" data-category="crm" href="portfolio/hd-mechanic.html">
           <div class="pc-image gradient2"><span>HD Mechanic CRM</span></div>
           <div class="pc-body">
             <h3>HD Mechanic & Scrap — CRM</h3>
@@ -230,7 +236,7 @@
             <div class="tags"><span>CRM</span><span>Case Study</span><span>Live →</span></div>
           </div>
         </a>
-        <a class="portfolio-card" href="portfolio/lux.html">
+        <a class="portfolio-card" data-category="portal" href="portfolio/lux.html">
           <div class="pc-image gradient3"><span>LUX Traffic</span></div>
           <div class="pc-body">
             <h3>LUX Traffic Management — Operations Portal</h3>
@@ -304,22 +310,17 @@
         <span class="eyebrow">Testimonials</span>
         <h2>What clients say.</h2>
       </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
-          <p>“Clean code, fast, and exactly what we asked for. Our new site has made bookings effortless.”</p>
-          <div class="author"><strong>Krystal’s Flower Kreations</strong> — E-Commerce & Bookings</div>
+      <div class="testimonial-carousel" id="testimonialCarousel">
+        <div class="testimonial-track" id="testimonialTrack">
+          <div class="testimonial-slide"><div class="testimonial-card"><div class="stars">★★★★★</div><p>“Clean code, fast, and exactly what we asked for. Our new site has made bookings effortless.”</p><div class="author"><strong>Krystal’s Flower Kreations</strong> — E-Commerce & Bookings</div></div></div>
+          <div class="testimonial-slide"><div class="testimonial-card"><div class="stars">★★★★★</div><p>“Transparent, no jargon. The CRM is rock solid and support is instant via email.”</p><div class="author"><strong>HD Mechanic & Scrap</strong> — CRM & Operations</div></div></div>
+          <div class="testimonial-slide"><div class="testimonial-card"><div class="stars">★★★★★</div><p>“Modern tech, reliable, and they understood our workflow from day one.”</p><div class="author"><strong>LUX Traffic Management</strong> — Operations Portal</div></div></div>
         </div>
-        <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
-          <p>“Transparent, no jargon. The CRM is rock solid and support is instant via email.”</p>
-          <div class="author"><strong>HD Mechanic & Scrap</strong> — CRM & Operations</div>
-        </div>
-        <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
-          <p>“Modern tech, reliable, and they understood our workflow from day one.”</p>
-          <div class="author"><strong>LUX Traffic Management</strong> — Operations Portal</div>
-        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carouselPrev" aria-label="Previous">‹</button>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="carousel-btn" id="carouselNext" aria-label="Next">›</button>
       </div>
     </div>
   </section>
