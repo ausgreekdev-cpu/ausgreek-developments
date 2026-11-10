@@ -1,0 +1,43 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install html-validate
+        run: npm install -g html-validate
+      - name: Validate HTML
+        run: html-validate "**/*.html" --ignore-pattern ".netlify/**" || true
+      - name: Check internal links
+        run: |
+          python3 - <<'PY'
+          import re, pathlib, os
+          root = pathlib.Path('.')
+          htmls = [p for p in root.rglob('*.html') if '.netlify' not in str(p)]
+          links = set()
+          for p in htmls:
+              t = p.read_text()
+              for m in re.finditer(r'href="([^"#]+)"', t):
+                  links.add((p, m.group(1)))
+          broken = []
+          for p, href in links:
+              if href.startswith('http') or href.startswith('mailto') or href.startswith('tel'): continue
+              target = (p.parent / href).resolve()
+              if href.endswith('/'): target = target / 'index.html'
+              if not target.exists():
+                  broken.append((str(p), href))
+          if broken:
+              print('Broken links:')
+              for b in broken: print(' ', b)
+              raise SystemExit(1)
+          print('All internal links OK')
+          PY
