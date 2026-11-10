@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Ausgreek Developments</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>.admin{max-width:900px;margin:48px auto;padding:0 24px} table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:8px;border-bottom:1px solid var(--slate-200);text-align:left} .token-box{margin-bottom:16px}</style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="navbar"><div class="container nav-container"><a href="/" class="logo"><span class="logo-mark">AD</span><span class="logo-text">Ausgreek<span>Developments</span></span></a></div></header>
+  <div class="admin" id="main">
+    <h1>Admin — Submissions</h1>
+    <div class="token-box">
+      <input id="adminToken" type="password" placeholder="Admin token" style="padding:8px 12px;border:1.5px solid var(--slate-200);border-radius:8px" />
+      <button class="btn btn-primary" id="loadBtn">Load</button>
+    </div>
+    <div id="status"></div>
+    <table id="table"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Type</th><th>Estimate</th><th>Created</th></tr></thead><tbody></tbody></table>
+  </div>
+  <script>
+    document.getElementById('loadBtn').addEventListener('click', async () => {
+      const token = document.getElementById('adminToken').value;
+      const status = document.getElementById('status');
+      status.textContent = 'Loading...';
+      try {
+        const res = await fetch('/.netlify/functions/submissions?token=' + encodeURIComponent(token));
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed');
+        const tbody = document.querySelector('#table tbody');
+        tbody.innerHTML = '';
+        (data.quotes || []).forEach(q => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = '<td>'+q.id+'</td><td>'+ (q.name||'') +'</td><td>'+ (q.email||'') +'</td><td>'+ (q.type||'') +'</td><td>'+ (q.estimate||'') +'</td><td>'+ (q.created_at||'') +'</td>';
+          tbody.appendChild(tr);
+        });
+        status.textContent = 'Loaded ' + (data.quotes||[]).length + ' quotes.';
+      } catch (e) { status.textContent = 'Error: ' + e.message; }
+    });
+  </script>
+</body>
+</html>

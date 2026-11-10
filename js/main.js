@@ -255,6 +255,24 @@ function updateEstimate() {
   estResult.textContent = 'Estimated: from $' + low.toLocaleString() + ' – $' + high.toLocaleString();
 }
 if (estType) { estType.addEventListener('change', updateEstimate); estPages.addEventListener('change', updateEstimate); updateEstimate(); }
+const estSubmit = document.getElementById('estSubmit');
+if (estSubmit) {
+  estSubmit.addEventListener('click', async () => {
+    const estStatus = document.getElementById('estStatus');
+    const name = (document.getElementById('estName').value || '').trim();
+    const email = (document.getElementById('estEmail').value || '').trim();
+    if (!email) { if (estStatus) estStatus.textContent = 'Please enter your email.'; return; }
+    if (estStatus) estStatus.textContent = 'Saving...';
+    try {
+      const res = await fetch('/.netlify/functions/quote', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, type: estType.value, scope: estPages.options[estPages.selectedIndex].text, estimate: estResult.textContent })
+      });
+      if (!res.ok) throw new Error('Failed');
+      if (estStatus) estStatus.textContent = '✓ Saved! We’ll be in touch.';
+    } catch (e) { if (estStatus) estStatus.textContent = '✗ Could not save. Email us instead.'; }
+  });
+}
 
 // Multi-step contact form
 const contactForm = document.getElementById('contactForm');
