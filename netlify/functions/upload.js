@@ -21,8 +21,17 @@ exports.handler = async (event) => {
   const { filename, contentType, data } = body;
   if (!filename || !data) return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'filename and data required' }) };
   try {
-    const buf = Buffer.from(data, 'base64');
-    await c.send(new PutObjectCommand({ Bucket: process.env.R2_BUCKET, Key: filename, Body: buf, ContentType: contentType || 'application/octet-stream' }));
+    let buf = Buffer.from(data, 'base64');
+    let ct = contentType || 'application/octet-stream';
+    try {
+      const sharp = require('sharp');
+      if (/\.(jpe?g|png|webp)$/i.test(filename)) {
+        buf = await sharp(buf).resize({ width: 1600, withoutEnlargement: true }).toBuffer();
+        ct = 'image/webp';
+        filename = filename.replace(/\.[^.]+$/, '.webp');
+      }
+    } catch (e) { /* sharp not available; upload original */ }
+    await c.send(new PutObjectCommand({ Bucket: process.env.R2_BUCKET, Key: filename, Body: buf, ContentType: ct }));
     const url = 'https://' + process.env.R2_BUCKET + '.' + process.env.R2_ACCOUNT_ID + '.r2.dev/' + encodeURIComponent(filename);
     return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ok: true, url }) };
   } catch (e) {
