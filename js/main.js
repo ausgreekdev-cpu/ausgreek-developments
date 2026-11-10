@@ -319,6 +319,57 @@ if (stickyCta) {
   stickyCta.style.transform = 'translateY(120%)';
 }
 
+// Scroll progress bar
+const scrollProgress = document.getElementById('scrollProgress');
+if (scrollProgress) {
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const total = (h.scrollHeight - h.clientHeight) || 1;
+    scrollProgress.style.width = Math.min(100, (h.scrollTop / total) * 100) + '%';
+  });
+}
+
+// Blur-up lazy images
+document.querySelectorAll('img[data-src]').forEach(img => {
+  const src = img.dataset.src;
+  const l = new Image();
+  l.onload = () => { img.src = src; img.classList.add('loaded'); img.classList.remove('lazy'); };
+  l.src = src;
+  img.classList.add('lazy');
+});
+
+// Button ripple
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const rect = btn.getBoundingClientRect();
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const size = Math.max(rect.width, rect.height);
+    r.style.width = r.style.height = size + 'px';
+    r.style.left = (e.clientX - rect.left - size/2) + 'px';
+    r.style.top = (e.clientY - rect.top - size/2) + 'px';
+    btn.appendChild(r);
+    setTimeout(() => r.remove(), 600);
+  });
+});
+
+// i18n scaffold
+const langBtn = document.getElementById('langBtn');
+const langMenu = document.getElementById('langMenu');
+if (langBtn && langMenu) {
+  langBtn.addEventListener('click', () => langMenu.classList.toggle('show'));
+  document.addEventListener('click', e => { if (!e.target.closest('.lang-switch')) langMenu.classList.remove('show'); });
+  langMenu.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const lang = b.dataset.lang;
+    localStorage.setItem('lang', lang);
+    langBtn.textContent = lang.toUpperCase();
+    langMenu.classList.remove('show');
+    // placeholder: real translation wiring would go here
+  }));
+  const saved = localStorage.getItem('lang') || 'en';
+  langBtn.textContent = saved.toUpperCase();
+}
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
