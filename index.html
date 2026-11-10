@@ -573,6 +573,12 @@
       <p>Chat coming soon. Email us at <a href="mailto:ausgreekdev@gmail.com">ausgreekdev@gmail.com</a> or book a call.</p>
     </div>
   </div>
+  <!-- Analytics + Sentry (optional) -->
+  <script>
+    (function(){ try {
+      fetch('/.netlify/functions/analytics', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ event:'pageview', page: location.pathname }) }).catch(()=>{});
+    } catch(e){} })();
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
