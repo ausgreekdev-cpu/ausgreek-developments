@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building Offline-First Mobile Apps for WA Mine Sites — Ausgreek Developments</title>
+  <meta name="description" content="How we build SQLite-backed sync engines that keep field teams productive where connectivity drops." />
+  <link rel="canonical" href="https://ausgreek-developments.netlify.app/blog/posts/offline-first-mobile-apps.html" />
+  <meta property="og:title" content="Building Offline-First Mobile Apps for WA Mine Sites — Ausgreek Developments" />
+  <meta property="og:description" content="How we build SQLite-backed sync engines that keep field teams productive where connectivity drops." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ausgreek-developments.netlify.app/blog/posts/offline-first-mobile-apps.html" />
+  <meta property="og:image" content="https://ausgreek-developments.netlify.app/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Building Offline-First Mobile Apps for WA Mine Sites — Ausgreek Developments" />
+  <meta name="twitter:description" content="How we build SQLite-backed sync engines that keep field teams productive where connectivity drops." />
+  <meta name="twitter:image" content="https://ausgreek-developments.netlify.app/assets/og-image.jpg" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Building offline-first mobile apps for WA mine sites","publisher":{"@type":"Organization","name":"Ausgreek Developments","logo":{"@type":"ImageObject","url":"https://ausgreek-developments.netlify.app/assets/og-image.jpg"}},"author":{"@type":"Organization","name":"Ausgreek Developments"},"url":"https://ausgreek-developments.netlify.app/blog/posts/offline-first-mobile-apps.html","datePublished":"2026-11-11","image":"https://ausgreek-developments.netlify.app/assets/og-image.jpg"}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ausgreek-developments.netlify.app/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://ausgreek-developments.netlify.app/blog/"},{"@type":"ListItem","position":3,"name":"Building offline-first mobile apps for WA mine sites","item":"https://ausgreek-developments.netlify.app/blog/posts/offline-first-mobile-apps.html"}]}
+  </script>
+  <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>.post{max-width:780px;margin:48px auto;padding:0 24px;line-height:1.7;color:#475569} .post h1{color:#0f172a} .meta{color:#94a3b8;font-size:13px}</style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="navbar"><div class="container nav-container"><a href="/" class="logo"><span class="logo-mark">AD</span><span class="logo-text">Ausgreek<span>Developments</span></span></a></div></header>
+  <div class="reading-progress" id="readingProgress"></div>
+  <article class="post" id="main">
+    <p class="meta">Nov 2026 • 6 min • Mobile</p>
+    <h1>Building offline-first mobile apps for WA mine sites</h1>
+    <p>Internet connectivity on WA mine sites is notoriously poor. Standard web apps stop working the moment the signal drops. Here's how we build apps that keep field teams productive.</p>
+    <h2>The problem</h2>
+    <p>RC, diamond, and air-core drill rigs operate in dead zones. Paper dockets get lost, data gets re-keyed, and stock counts go stale. Off-the-shelf tools like ServiceM8 assume a connection.</p>
+    <h2>The approach: SQLite + sync</h2>
+    <p>We use React Native with a local SQLite database. Every action is written locally first, then synced to the cloud when connectivity returns. Conflict resolution handles concurrent edits.</p>
+    <pre><code class="code-block">// Write locally, sync when online
+const db = new SQLite();
+await db.insert(job);
+if (navigator.onLine) {
+  await sync.toServer();
+}</code></pre>
+    <h2>Key decisions</h2>
+    <ul>
+      <li><strong>Local-first writes:</strong> never block the user on a network request.</li>
+      <li><strong>Conflict resolution:</strong> last-write-wins with audit log, or merge strategies per field.</li>
+      <li><strong>Background sync:</strong> queue changes and retry with exponential backoff.</li>
+      <li><strong>Multi-tenant:</strong> role-based access for crews, supervisors, office.</li>
+    </ul>
+    <h2>Results</h2>
+    <p>Field teams capture data without waiting on a signal. Office sees real-time status when connected. Zero lost dockets.</p>
+    <p><a href="/blog/">← Back to blog</a> | <a href="/mining.html">Mining & field services →</a></p>
+  </article>
+  <p style="text-align:center;font-size:12px;color:#94a3b8;padding:16px 0;margin:0">© Ausgreek Developments · <a href="../../privacy.html" style="color:#64748b">Privacy</a> · <a href="../../terms.html" style="color:#64748b">Terms</a></p>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+  <div class="offline-banner" id="offlineBanner">You're offline — some features may be unavailable</div>
+  <script src="../../js/main.js"></script>
+</body>
+</html>
