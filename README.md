@@ -60,6 +60,8 @@ Env vars (set in Netlify → Site settings → Environment):
 - `CONTACT_EMAIL` (optional, default ausgreekdev@gmail.com)
 - `RECAPTCHA_SECRET` (optional) — enables reCAPTCHA verification
 - `SITE_URL` (optional) — site base URL for forwarding to Netlify Forms
+- `STRIPE_SECRET_KEY` (optional) — enables Stripe deposit checkout
+- `STRIPE_PRICE_ID` (optional) — pre-created Stripe price ID
 - `CRM_WEBHOOK_URL` (optional) — webhook fired on new contact submission
 - `NEWSLETTER_PROVIDER` (optional) — 'mailchimp' or 'convertkit'
 - `NEWSLETTER_API_KEY`, `NEWSLETTER_LIST_ID` / `NEWSLETTER_FORM_ID` (optional)
@@ -97,6 +99,17 @@ sw.js               service worker
 sitemap.xml         all public URLs
 deploy.sh           production deploy (see above)
 ```
+
+## Blog comments (Giscus)
+Blog posts include a Giscus widget (GitHub Discussions). To activate:
+1. Enable **GitHub Discussions** on the repo (Settings → Features → Discussions).
+2. Visit https://giscus.app to get your `data-category-id`.
+3. Replace `REPLACE_WITH_CATEGORY_ID` in `blog/posts/*.html` with the real ID.
+
+## Payments (Stripe)
+- `STRIPE_SECRET_KEY` env var (Stripe dashboard → API keys).
+- `STRIPE_PRICE_ID` (optional) — pre-created price; otherwise uses inline price_data ($1,950 deposit).
+- "Pay deposit via Stripe" button on pricing section.
 
 ## Security headers / CSP maintenance
 `netlify.toml` sets security headers for all routes. `Content-Security-Policy-Report-Only` is currently enabled (not enforcing) so you can check browser console for violations after deploy — especially when clicking **Show calendar** (Calendly). Once clean, rename the header to `Content-Security-Policy` to enforce.

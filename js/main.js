@@ -446,6 +446,29 @@ if (newsletterForm) {
   });
 }
 
+// Stripe deposit (lazy)
+const payDeposit = document.getElementById('payDeposit');
+if (payDeposit) {
+  payDeposit.addEventListener('click', async () => {
+    payDeposit.classList.add('loading');
+    payDeposit.insertAdjacentHTML('afterbegin', '<span class="spinner"></span>');
+    try {
+      const res = await fetch('/.netlify/functions/checkout', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_name: 'Ausgreek Developments — Project Deposit', amount: 195000 })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Checkout failed');
+      if (data.url) window.location.href = data.url;
+    } catch (e) {
+      alert('Stripe not configured yet. Email us to arrange payment.');
+    } finally {
+      payDeposit.classList.remove('loading');
+      const sp = payDeposit.querySelector('.spinner'); if (sp) sp.remove();
+    }
+  });
+}
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
