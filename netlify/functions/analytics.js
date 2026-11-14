@@ -8,7 +8,6 @@ exports.handler = async (event) => {
     try { body = JSON.parse(event.body || '{}'); } catch (e) { return { statusCode: 400, body: 'Bad JSON' }; }
     events.push({ ...body, ip: (event.headers['x-forwarded-for'] || '').split(',')[0], ts: body.ts || Date.now() });
     if (events.length > 1000) events.shift();
-    console.log('analytics', JSON.stringify(body));
     return { statusCode: 204, headers: { 'Access-Control-Allow-Origin': '*' }, body: '' };
   }
   if (event.httpMethod === 'GET') {

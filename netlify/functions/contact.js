@@ -22,6 +22,10 @@ function json(status, body) {
   return { statusCode: status, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
 }
 
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 async function sendEmail(apiKey, to, subject, html, replyTo) {
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -79,13 +83,13 @@ exports.handler = async (event) => {
   // Send notification + auto-responder if API key present
   if (apiKey) {
     const html = '<h2>New contact submission</h2>' +
-      '<p><strong>Name:</strong> ' + name + '</p>' +
-      '<p><strong>Email:</strong> ' + email + '</p>' +
-      '<p><strong>Service:</strong> ' + service + '</p>' +
-      '<p><strong>Message:</strong><br>' + message.replace(/\n/g, '<br>') + '</p>';
-    await sendEmail(apiKey, to, 'New contact: ' + name, html, email).catch(() => {});
+      '<p><strong>Name:</strong> ' + esc(name) + '</p>' +
+      '<p><strong>Email:</strong> ' + esc(email) + '</p>' +
+      '<p><strong>Service:</strong> ' + esc(service) + '</p>' +
+      '<p><strong>Message:</strong><br>' + esc(message).replace(/\n/g, '<br>') + '</p>';
+    await sendEmail(apiKey, to, 'New contact: ' + esc(name), html, email).catch(() => {});
 
-    const auto = '<p>Hi ' + name + ',</p><p>Thanks for reaching out to Ausgreek Developments. We\'ve received your message and will get back to you within 24 hours.</p><p>— Ausgreek Developments</p>';
+    const auto = '<p>Hi ' + esc(name) + ',</p><p>Thanks for reaching out to Ausgreek Developments. We\'ve received your message and will get back to you within 24 hours.</p><p>— Ausgreek Developments</p>';
     await sendEmail(apiKey, email, 'Thanks for contacting Ausgreek Developments', auto, to).catch(() => {});
   }
 

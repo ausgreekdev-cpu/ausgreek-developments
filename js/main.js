@@ -126,6 +126,12 @@ if (track) {
   }
   if (prevBtn) prevBtn.addEventListener('click', () => { idx = Math.max(0, idx - 1); update(); });
   if (nextBtn) nextBtn.addEventListener('click', () => { idx = Math.min(maxIdx, idx + 1); update(); });
+  // keyboard nav
+  if (track) track.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { idx = Math.max(0, idx - 1); update(); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { idx = Math.min(maxIdx, idx + 1); update(); e.preventDefault(); }
+  });
+  if (track) track.setAttribute('tabindex', '0');
   renderDots();
   update();
   // auto-advance
