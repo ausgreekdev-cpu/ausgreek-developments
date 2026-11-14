@@ -101,10 +101,10 @@ deploy.sh           production deploy (see above)
 ```
 
 ## Blog comments (Giscus)
-Blog posts include a Giscus widget (GitHub Discussions). To activate:
-1. Enable **GitHub Discussions** on the repo (Settings → Features → Discussions).
-2. Visit https://giscus.app to get your `data-category-id`.
-3. Replace `REPLACE_WITH_CATEGORY_ID` in `blog/posts/*.html` with the real ID.
+Blog posts include a Giscus widget (GitHub Discussions). Already configured:
+- Repo: `ausgreekdev-cpu/ausgreek-developments`
+- Category: General (`DIC_kwDOUJ6wdM4DLG4w`)
+- GitHub Discussions enabled via API.
 
 ## Payments (Stripe)
 - `STRIPE_SECRET_KEY` env var (Stripe dashboard → API keys).
