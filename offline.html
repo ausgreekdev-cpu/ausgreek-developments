@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline — Ausgreek Developments</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>.offline-page{min-height:70vh;display:grid;place-items:center;text-align:center;padding:48px 24px} .offline-page h1{font-size:64px;margin-bottom:12px} .offline-page p{color:var(--slate-600);max-width:480px;margin:0 auto 24px}</style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="navbar"><div class="container nav-container"><a href="/" class="logo"><span class="logo-mark">AD</span><span class="logo-text">Ausgreek<span>Developments</span></span></a></div></header>
+  <div class="offline-page" id="main">
+    <div>
+      <div style="font-size:64px">📡</div>
+      <h1>You're offline</h1>
+      <p>It looks like you've lost your connection. Some pages may still be available from cache.</p>
+      <a href="/" class="btn btn-primary">← Back to Home</a>
+      <button class="btn btn-ghost" onclick="location.reload()" style="margin-left:8px">Retry</button>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> Ausgreek Developments</span>
+    </div>
+  </footer>
+  <script>var y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();</script>
+</body>
+</html>

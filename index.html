@@ -667,16 +667,23 @@
     <button class="btn btn-primary" id="cookieAccept">Accept</button>
     <button class="btn btn-ghost" id="cookieDecline">Decline</button>
   </div>
-  <div class="chat-widget" id="chatWidget">
+  <div class="chat-widget" id="chatWidget" data-chat-src="">
     <button class="chat-toggle" id="chatToggle" aria-label="Open chat">💬</button>
     <div class="chat-panel" id="chatPanel">
-      <p>Chat coming soon. Email us at <a href="mailto:ausgreekdev@gmail.com">ausgreekdev@gmail.com</a> or book a call.</p>
+      <p>Chat coming soon. Email us at <a href="mailto:ausgreekdev@gmail.com">ausgreekdev@gmail.com</a> or <a href="https://calendly.com/ausgreekdev/30min" target="_blank" rel="noopener noreferrer">book a call</a>.</p>
     </div>
   </div>
   <!-- Analytics + Sentry (optional) -->
   <script>
     (function(){ try {
-      fetch('/.netlify/functions/analytics', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ event:'pageview', page: location.pathname }) }).catch(()=>{});
+      if (localStorage.getItem('cookieChoice') === 'accepted') {
+        fetch('/.netlify/functions/analytics', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ event:'pageview', page: location.pathname }) }).catch(()=>{});
+      }
+      // A/B test hero CTA
+      fetch('/.netlify/functions/ab?exp=hero_cta').then(r=>r.json()).then(d=>{
+        var cta = document.querySelector('.hero-actions .btn-primary');
+        if (cta && d.variant === 'B') cta.textContent = 'Book a free scoping call →';
+      }).catch(()=>{});
     } catch(e){} })();
   </script>
   <script src="js/main.js"></script>

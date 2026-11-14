@@ -1,4 +1,4 @@
-const VERSION = 'v25';
+const VERSION = 'v26';
 const PAGES_CACHE = 'ausgreek-pages-' + VERSION;
 const STATIC_CACHE = 'ausgreek-static-' + VERSION;
 const CURRENT_CACHES = [PAGES_CACHE, STATIC_CACHE];
@@ -7,6 +7,7 @@ const PRECACHE_PAGES = [
   '/',
   '/index.html',
   '/404.html',
+  '/offline.html',
   '/thanks.html',
   '/privacy.html',
   '/terms.html'
@@ -62,7 +63,7 @@ async function networkFirstPage(req) {
   } catch (err) {
     const cached = await cache.match(req, { ignoreSearch: true });
     if (cached) return cached;
-    const fallback = await cache.match('/index.html');
+    const fallback = await cache.match('/offline.html') || await cache.match('/index.html');
     if (fallback) return fallback;
     throw err;
   }

@@ -148,6 +148,8 @@ if (form) {
       statusEl.textContent = 'Sending...';
       statusEl.className = 'form-status';
     }
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) { submitBtn.classList.add('loading'); submitBtn.insertAdjacentHTML('afterbegin', '<span class="spinner"></span>'); }
     const formData = new FormData(form);
     // Local demo - no network
     const isLocal = ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
@@ -185,11 +187,15 @@ if (form) {
           statusEl.textContent = '✓ Thanks! Your message has been sent. We’ll be in touch within 24 hours.';
           statusEl.className = 'form-status success';
         }
+        const sb2 = form.querySelector('button[type="submit"]');
+        if (sb2) { sb2.classList.remove('loading'); const sp2 = sb2.querySelector('.spinner'); if (sp2) sp2.remove(); }
         form.reset();
       } else {
         throw new Error('Network response was not ok');
       }
     } catch (err) {
+      const sb = form.querySelector('button[type="submit"]');
+      if (sb) { sb.classList.remove('loading'); const sp = sb.querySelector('.spinner'); if (sp) sp.remove(); }
       if (statusEl) {
         statusEl.textContent = '✗ Something went wrong. Please try again or email us directly at ausgreekdev@gmail.com';
         statusEl.className = 'form-status error';
@@ -269,6 +275,7 @@ if (estSubmit) {
     const email = (document.getElementById('estEmail').value || '').trim();
     if (!email) { if (estStatus) estStatus.textContent = 'Please enter your email.'; return; }
     if (estStatus) estStatus.textContent = 'Saving...';
+    if (estSubmit) { estSubmit.classList.add('loading'); estSubmit.insertAdjacentHTML('afterbegin', '<span class="spinner"></span>'); }
     try {
       const res = await fetch('/.netlify/functions/quote', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -277,6 +284,7 @@ if (estSubmit) {
       if (!res.ok) throw new Error('Failed');
       if (estStatus) estStatus.textContent = '✓ Saved! We’ll be in touch.';
     } catch (e) { if (estStatus) estStatus.textContent = '✗ Could not save. Email us instead.'; }
+    if (estSubmit) { estSubmit.classList.remove('loading'); const sp = estSubmit.querySelector('.spinner'); if (sp) sp.remove(); }
   });
 }
 
@@ -339,11 +347,22 @@ if (cookieBanner && !localStorage.getItem('cookieChoice')) {
 if (cookieAccept) cookieAccept.addEventListener('click', () => { localStorage.setItem('cookieChoice','accepted'); cookieBanner.classList.remove('show'); });
 if (cookieDecline) cookieDecline.addEventListener('click', () => { localStorage.setItem('cookieChoice','declined'); cookieBanner.classList.remove('show'); });
 
-// Chat widget
+// Chat widget (lazy-load provider if configured)
 const chatToggle = document.getElementById('chatToggle');
 const chatPanel = document.getElementById('chatPanel');
+const chatWidget = document.getElementById('chatWidget');
 if (chatToggle && chatPanel) {
-  chatToggle.addEventListener('click', () => chatPanel.classList.toggle('show'));
+  chatToggle.addEventListener('click', () => {
+    const src = chatWidget ? chatWidget.getAttribute('data-chat-src') : '';
+    if (src && !chatWidget.dataset.loaded) {
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      document.body.appendChild(s);
+      chatWidget.dataset.loaded = '1';
+    }
+    chatPanel.classList.toggle('show');
+  });
 }
 
 // Sticky CTA show/hide on scroll
