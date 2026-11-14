@@ -22,7 +22,7 @@ Contact form shows a demo-mode message on localhost; on the live site it posts t
 
 ## Deploy
 
-Use **`./deploy.sh`** (commit first — it refuses a dirty tree):
+Run **`./check-deploy.sh`** first, then **`./deploy.sh`** (commit first — it refuses a dirty tree):
 
 ```bash
 git add -A && git commit -m "..."

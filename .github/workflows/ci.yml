@@ -22,7 +22,7 @@ jobs:
           python3 - <<'PY'
           import re, pathlib, os
           root = pathlib.Path('.')
-          htmls = [p for p in root.rglob('*.html') if '.netlify' not in str(p)]
+          htmls = [p for p in root.rglob('*.html') if '.netlify' not in str(p) and 'node_modules' not in str(p)]
           links = set()
           for p in htmls:
               t = p.read_text()
@@ -41,3 +41,17 @@ jobs:
               raise SystemExit(1)
           print('All internal links OK')
           PY
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://ausgreek-developments.netlify.app/
+            https://ausgreek-developments.netlify.app/mining.html
+            https://ausgreek-developments.netlify.app/blog/
+          uploadArtifacts: true
+          temporaryPublicStorage: true
