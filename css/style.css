@@ -463,6 +463,13 @@ img.lazy.loaded{filter:blur(0)}
 @keyframes spin{to{transform:rotate(360deg)}}
 .btn.loading{pointer-events:none;opacity:.7}
 .btn.loading .spinner{border-color:rgba(15,23,42,.2);border-top-color:var(--navy)}
+/* Print */
+@media print {
+  .navbar, .back-to-top, .offline-banner, .sticky-cta, .cookie-banner, .chat-widget, .filter-bar, .blog-toolbar, .carousel-controls, .theme-toggle { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  a { text-decoration: underline; }
+  .section { padding: 24px 0; }
+}
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }

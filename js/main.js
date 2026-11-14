@@ -224,8 +224,17 @@ if (calendlyEmbed) {
 const themeToggle = document.getElementById('themeToggle');
 const rootEl = document.documentElement;
 const savedTheme = localStorage.getItem('theme');
-if (savedTheme) rootEl.setAttribute('data-theme', savedTheme);
+if (savedTheme === 'dark') rootEl.setAttribute('data-theme', 'dark');
+else if (savedTheme === 'light') rootEl.removeAttribute('data-theme');
 else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) rootEl.setAttribute('data-theme', 'dark');
+// Listen for system theme changes
+if (window.matchMedia) {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      if (e.matches) rootEl.setAttribute('data-theme', 'dark'); else rootEl.removeAttribute('data-theme');
+    }
+  });
+}
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
     const next = rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
