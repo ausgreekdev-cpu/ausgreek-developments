@@ -86,6 +86,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://ausgreek-developments.netlify.app/blog/posts/mvp-scoping-one-week.html</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://ausgreek-developments.netlify.app/mining.html</loc>
     <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
