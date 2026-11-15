@@ -29,9 +29,11 @@ const portfolioFilter = document.getElementById('portfolioFilter');
 if (portfolioFilter) {
   const cards = document.querySelectorAll('.portfolio-card');
   portfolioFilter.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
     btn.addEventListener('click', () => {
-      portfolioFilter.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      portfolioFilter.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       const f = btn.dataset.filter;
       cards.forEach(c => {
         const cat = c.dataset.category || '';
@@ -59,11 +61,15 @@ if (blogSearch || blogTags.length) {
     });
   }
   if (blogSearch) blogSearch.addEventListener('input', applyBlogFilter);
-  blogTags.forEach(t => t.addEventListener('click', () => {
-    blogTags.forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    applyBlogFilter();
-  }));
+  blogTags.forEach(t => {
+    t.setAttribute('aria-pressed', t.classList.contains('active') ? 'true' : 'false');
+    t.addEventListener('click', () => {
+      blogTags.forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
+      t.classList.add('active');
+      t.setAttribute('aria-pressed', 'true');
+      applyBlogFilter();
+    });
+  });
 }
 
 // Reading progress
