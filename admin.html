@@ -19,28 +19,45 @@
       <button class="btn btn-primary" id="loadBtn">Load</button>
     </div>
     <div id="status"></div>
+    <h2 style="margin-top:24px">Analytics (last 100 events)</h2>
+    <div id="analyticsStatus" style="font-size:13px;color:var(--slate-600);margin-bottom:8px"></div>
+    <table id="analyticsTable"><thead><tr><th>Event</th><th>Page</th><th>IP</th><th>Time</th></tr></thead><tbody></tbody></table>
+    <h2 style="margin-top:24px">Quote submissions</h2>
     <table id="table"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Type</th><th>Estimate</th><th>Created</th></tr></thead><tbody></tbody></table>
   </div>
   <script>
-    document.getElementById('loadBtn').addEventListener('click', async () => {
-      const token = document.getElementById('adminToken').value;
+    async function loadAll(token) {
       const status = document.getElementById('status');
+      const aStatus = document.getElementById('analyticsStatus');
       status.textContent = 'Loading...';
       try {
-        const res = await fetch('/.netlify/functions/submissions', {
-          headers: { 'X-Admin-Token': token }
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Failed');
+        const [subRes, anaRes] = await Promise.all([
+          fetch('/.netlify/functions/submissions', { headers: { 'X-Admin-Token': token } }),
+          fetch('/.netlify/functions/analytics', { headers: { 'X-Admin-Token': token } })
+        ]);
+        const subData = await subRes.json();
+        const anaData = await anaRes.json();
+        if (!subRes.ok) throw new Error(subData.error || 'Submissions failed');
         const tbody = document.querySelector('#table tbody');
         tbody.innerHTML = '';
-        (data.quotes || []).forEach(q => {
+        (subData.quotes || []).forEach(q => {
           const tr = document.createElement('tr');
           tr.innerHTML = '<td>'+q.id+'</td><td>'+ (q.name||'') +'</td><td>'+ (q.email||'') +'</td><td>'+ (q.type||'') +'</td><td>'+ (q.estimate||'') +'</td><td>'+ (q.created_at||'') +'</td>';
           tbody.appendChild(tr);
         });
-        status.textContent = 'Loaded ' + (data.quotes||[]).length + ' quotes.';
+        status.textContent = 'Loaded ' + (subData.quotes||[]).length + ' quotes.';
+        const aTbody = document.querySelector('#analyticsTable tbody');
+        aTbody.innerHTML = '';
+        (anaData.events || []).forEach(e => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = '<td>'+ (e.event||'') +'</td><td>'+ (e.page||'') +'</td><td>'+ (e.ip||'') +'</td><td>'+ (e.ts||'') +'</td>';
+          aTbody.appendChild(tr);
+        });
+        if (aStatus) aStatus.textContent = 'Loaded ' + (anaData.events||[]).length + ' events.';
       } catch (e) { status.textContent = 'Error: ' + e.message; }
+    }
+    document.getElementById('loadBtn').addEventListener('click', () => {
+      loadAll(document.getElementById('adminToken').value);
     });
   </script>
 </body>
