@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: ausgreekdev-cpu/ausgreek-developments
+  name: git-gateway
   branch: main
 
 media_folder: "assets/uploads"
