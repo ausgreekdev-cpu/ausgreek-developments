@@ -246,6 +246,77 @@
     </div>
   </section>
 
+  <!-- Architecture diagram -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">How We Build</span>
+        <h2>From idea to production.</h2>
+        <p>Modern, scalable architecture — not monolithic legacy stacks.</p>
+      </div>
+      <div class="arch-diagram reveal">
+        <div class="arch-flow">
+          <div class="arch-node">👤 User</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node">📱 React Native / PWA</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node">⚡ Netlify Edge</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node">🔧 Serverless Functions</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node">🗄️ Supabase / Postgres</div>
+        </div>
+        <div class="arch-flow" style="margin-top:12px">
+          <div class="arch-node">🤖 AI Agents</div>
+          <div class="arch-arrow">↔</div>
+          <div class="arch-node">🔄 Sync Engine</div>
+          <div class="arch-arrow">↔</div>
+          <div class="arch-node">📦 Cloudflare R2</div>
+          <div class="arch-arrow">↔</div>
+          <div class="arch-node">📧 Resend</div>
+        </div>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--slate-600)">Offline-first • Multi-tenant • Real-time sync • AI-orchestrated</p>
+      </div>
+    </div>
+  </section>
+  <!-- Performance budget -->
+  <section class="section" style="background:var(--slate-50)">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Performance Budget</span>
+        <h2>Performance is a feature.</h2>
+        <p>We ship fast. Here's the evidence.</p>
+      </div>
+      <div class="perf-dashboard reveal">
+        <div class="perf-item"><div class="num" data-target="36" data-suffix="K">0</div><div class="lbl">CSS size</div><div class="bar"><div class="bar-fill" style="width:100%"></div></div></div>
+        <div class="perf-item"><div class="num" data-target="24" data-suffix="K">0</div><div class="lbl">JS size</div><div class="bar"><div class="bar-fill" style="width:100%"></div></div></div>
+        <div class="perf-item"><div class="num" data-target="56" data-suffix="K">0</div><div class="lbl">Largest image</div><div class="bar"><div class="bar-fill" style="width:100%"></div></div></div>
+        <div class="perf-item"><div class="num" data-target="99" data-suffix="">0</div><div class="lbl">Lighthouse</div><div class="bar"><div class="bar-fill" style="width:99%"></div></div></div>
+        <div class="perf-item"><div class="num" data-target="0" data-suffix="">0</div><div class="lbl">Render-blocking JS</div><div class="bar"><div class="bar-fill" style="width:0%"></div></div></div>
+      </div>
+      <div style="text-align:center;margin-top:16px">
+        <span class="visitor-counter"><span class="dot"></span><span><span class="count">1</span> viewing now</span></span>
+      </div>
+    </div>
+  </section>
+  <!-- Security headers display -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Security</span>
+        <h2>We practice what we preach.</h2>
+        <p>This site uses the same security headers we deploy for clients.</p>
+      </div>
+      <div class="status-grid reveal">
+        <div class="status-item"><span class="status-dot green"></span><span>X-Frame-Options: DENY</span></div>
+        <div class="status-item"><span class="status-dot green"></span><span>X-Content-Type-Options: nosniff</span></div>
+        <div class="status-item"><span class="status-dot green"></span><span>Strict-Transport-Security</span></div>
+        <div class="status-item"><span class="status-dot green"></span><span>Content-Security-Policy</span></div>
+        <div class="status-item"><span class="status-dot green"></span><span>Referrer-Policy: strict</span></div>
+        <div class="status-item"><span class="status-dot green"></span><span>Permissions-Policy</span></div>
+      </div>
+    </div>
+  </section>
   <!-- Built for -->
   <section class="section" style="background:var(--slate-50);border-top:1px solid var(--slate-200);border-bottom:1px solid var(--slate-200)">
     <div class="container">
