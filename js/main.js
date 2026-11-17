@@ -484,6 +484,76 @@ if (payDeposit) {
   });
 }
 
+// Scroll-triggered reveals
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+
+// Parallax hero
+const heroOrbs = document.querySelectorAll('.hero-orb');
+if (heroOrbs.length) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    heroOrbs.forEach((orb, i) => { orb.style.transform = 'translateY(' + (y * (i === 0 ? 0.3 : 0.15)) + 'px)'; });
+  }, { passive: true });
+}
+
+// Magnetic buttons
+document.querySelectorAll('.btn-primary').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = 'translate(' + (x * 0.15) + 'px, ' + (y * 0.15) + 'px)';
+  });
+  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+
+// Custom cursor
+const cursor = document.createElement('div');
+cursor.className = 'custom-cursor';
+document.body.appendChild(cursor);
+document.addEventListener('mousemove', (e) => { cursor.style.left = (e.clientX - 10) + 'px'; cursor.style.top = (e.clientY - 10) + 'px'; });
+document.querySelectorAll('a, button, .btn').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// Real-time visitor counter
+const visitorCounter = document.getElementById('visitorCounter');
+if (visitorCounter) {
+  function updateVisitors() {
+    fetch('/.netlify/functions/analytics').then(r => r.json()).then(d => {
+      visitorCounter.querySelector('.count').textContent = (d.count || 0) + 1;
+    }).catch(() => {});
+  }
+  updateVisitors();
+  setInterval(updateVisitors, 30000);
+}
+
+// Performance dashboard animated counters
+const perfNums = document.querySelectorAll('.perf-item .num[data-target]');
+if (perfNums.length) {
+  const perfObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const step = Math.ceil(target / 30);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current + (el.dataset.suffix || '');
+          if (current >= target) clearInterval(timer);
+        }, 30);
+        perfObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  perfNums.forEach(el => perfObserver.observe(el));
+}
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
