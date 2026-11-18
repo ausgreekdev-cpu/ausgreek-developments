@@ -554,6 +554,48 @@ if (perfNums.length) {
   perfNums.forEach(el => perfObserver.observe(el));
 }
 
+// Code playground live preview
+const codeEditor = document.getElementById('codeEditor');
+const codePreview = document.getElementById('codePreview');
+if (codeEditor && codePreview) {
+  function updatePreview() {
+    const doc = codePreview.contentDocument || codePreview.contentWindow.document;
+    doc.open();
+    doc.write(codeEditor.value);
+    doc.close();
+  }
+  codeEditor.addEventListener('input', updatePreview);
+  updatePreview();
+}
+
+// Open source showcase (GitHub API)
+const ghRepos = document.getElementById('githubRepos');
+if (ghRepos) {
+  fetch('https://api.github.com/users/ausgreekdev-cpu/repos?sort=updated&per_page=6')
+    .then(r => r.json())
+    .then(repos => {
+      if (!Array.isArray(repos) || repos.length === 0) {
+        ghRepos.innerHTML = '<div style="text-align:center;padding:24px;color:var(--slate-400)">No public repos found.</div>';
+        return;
+      }
+      ghRepos.innerHTML = repos.map(r =>
+        '<a href="' + r.html_url + '" target="_blank" rel="noopener noreferrer" style="display:block;background:#fff;border:1px solid var(--slate-200);border-radius:12px;padding:16px;text-decoration:none;color:inherit;transition:transform .2s" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'">' +
+        '<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">' +
+        '<strong style="font-size:14px;color:var(--navy)">' + r.name + '</strong>' +
+        '<span style="font-size:11px;color:var(--slate-400)">⭐ ' + r.stargazers_count + '</span>' +
+        '</div>' +
+        '<p style="font-size:12px;color:var(--slate-600);margin-bottom:8px;line-height:1.5">' + (r.description || 'No description') + '</p>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+        (r.language ? '<span style="font-size:10px;font-weight:600;background:var(--slate-100);padding:3px 8px;border-radius:999px;color:var(--slate-600)">' + r.language + '</span>' : '') +
+        '<span style="font-size:10px;font-weight:600;background:var(--slate-100);padding:3px 8px;border-radius:999px;color:var(--slate-600)">Forks: ' + r.forks_count + '</span>' +
+        '</div></a>'
+      ).join('');
+    })
+    .catch(() => {
+      ghRepos.innerHTML = '<div style="text-align:center;padding:24px;color:var(--slate-400)">Could not load repos. <a href="https://github.com/ausgreekdev-cpu" style="color:var(--blue)">View on GitHub →</a></div>';
+    });
+}
+
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
