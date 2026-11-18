@@ -609,7 +609,7 @@ if (baSlider && baBefore && baHandle) {
     pct = Math.max(0.05, Math.min(0.95, pct));
     baBefore.style.width = (pct * 100) + '%';
     baHandle.style.left = (pct * 100) + '%';
-    const inner = baBefore.querySelector('div');
+    const inner = baBefore.querySelector('img') || baBefore.querySelector('div');
     if (inner) inner.style.width = (100 / pct) + '%';
   }
   baSlider.addEventListener('mousedown', (e) => { dragging = true; updateSlider(e.clientX); });
