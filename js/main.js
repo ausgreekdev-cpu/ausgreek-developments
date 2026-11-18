@@ -520,6 +520,68 @@ document.querySelectorAll('a, button, .btn').forEach(el => {
   el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
 });
 
+// Particle trail
+const canvas = document.createElement('canvas');
+canvas.id = 'particleCanvas';
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+document.addEventListener('mousemove', (e) => {
+  for (let i = 0; i < 2; i++) {
+    particles.push({ x: e.clientX, y: e.clientY, vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2, life: 1, size: Math.random()*3+1 });
+  }
+});
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = particles.filter(p => p.life > 0);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.life -= 0.02; p.size *= 0.98;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(37,99,235,' + p.life + ')';
+    ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// Live status page
+const statusPage = document.getElementById('statusPage');
+if (statusPage) {
+  fetch('/.netlify/functions/health').then(r => r.json()).then(d => {
+    statusPage.innerHTML = '<div class="status-card"><span class="status-dot green"></span><div class="info"><div class="name">API</div><div class="detail">' + d.status + ' — ' + new Date(d.time).toLocaleTimeString() + '</div></div></div>' +
+      '<div class="status-card"><span class="status-dot green"></span><div class="info"><div class="name">Functions</div><div class="detail">' + (d.functions||[]).length + ' deployed</div></div></div>' +
+      '<div class="status-card"><span class="status-dot green"></span><div class="info"><div class="name">Version</div><div class="detail">' + d.version + '</div></div></div>' +
+      '<div class="status-card"><span class="status-dot green"></span><div class="info"><div class="name">Site</div><div class="detail">ausgreek-developments.netlify.app</div></div></div>';
+  }).catch(() => {
+    statusPage.innerHTML = '<div class="status-card"><span class="status-dot red"></span><div class="info"><div class="name">API</div><div class="detail">Unreachable</div></div></div>';
+  });
+}
+
+// Interactive pricing calculator
+const calcSliders = document.querySelectorAll('.calc-slider');
+if (calcSliders.length) {
+  function updateCalc() {
+    const pages = parseInt(document.getElementById('calcPages').value) || 5;
+    const features = parseInt(document.getElementById('calcFeatures').value) || 3;
+    const integrations = parseInt(document.getElementById('calcIntegrations').value) || 1;
+    const base = 3500;
+    const est = Math.round(base + (pages * 200) + (features * 800) + (integrations * 1500));
+    const low = Math.round(est * 0.85);
+    const high = Math.round(est * 1.3);
+    const result = document.getElementById('calcResult');
+    if (result) result.innerHTML = 'Estimated: $' + low.toLocaleString() + ' – $' + high.toLocaleString() + '<small>Indicative — final quote after discovery</small>';
+    document.getElementById('calcPagesVal').textContent = pages;
+    document.getElementById('calcFeaturesVal').textContent = features;
+    document.getElementById('calcIntegrationsVal').textContent = integrations;
+  }
+  calcSliders.forEach(s => s.addEventListener('input', updateCalc));
+  updateCalc();
+}
+
 // Real-time visitor counter
 const visitorCounter = document.getElementById('visitorCounter');
 if (visitorCounter) {

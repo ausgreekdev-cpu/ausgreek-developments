@@ -391,6 +391,33 @@
       <p style="text-align:center;margin-top:16px"><a href="https://github.com/ausgreekdev-cpu" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">View on GitHub →</a></p>
     </div>
   </section>
+  <!-- Interactive pricing calculator -->
+  <section class="section">
+    <div class="container" style="max-width:700px">
+      <div class="section-head reveal">
+        <span class="eyebrow">Pricing Calculator</span>
+        <h2>Estimate your project cost.</h2>
+        <p>Drag the sliders to see an indicative price range.</p>
+      </div>
+      <div class="calc-row"><label>Pages / screens: <span id="calcPagesVal">5</span></label><input type="range" class="calc-slider" id="calcPages" min="1" max="20" value="5" /></div>
+      <div class="calc-row"><label>Features: <span id="calcFeaturesVal">3</span></label><input type="range" class="calc-slider" id="calcFeatures" min="1" max="10" value="3" /></div>
+      <div class="calc-row"><label>Integrations: <span id="calcIntegrationsVal">1</span></label><input type="range" class="calc-slider" id="calcIntegrations" min="0" max="5" value="1" /></div>
+      <div class="calc-result" id="calcResult">Estimated: $0 – $0<small>Indicative — final quote after discovery</small></div>
+    </div>
+  </section>
+  <!-- Live status -->
+  <section class="section" style="background:var(--slate-50)">
+    <div class="container" style="max-width:700px">
+      <div class="section-head reveal">
+        <span class="eyebrow">Live Status</span>
+        <h2>We monitor what we build.</h2>
+        <p>Real-time health of our services.</p>
+      </div>
+      <div class="status-page" id="statusPage">
+        <div class="status-card"><span class="status-dot green"></span><div class="info"><div class="name">Loading...</div><div class="detail">Checking services</div></div></div>
+      </div>
+    </div>
+  </section>
   <!-- Built for -->
   <section class="section" style="background:var(--slate-50);border-top:1px solid var(--slate-200);border-bottom:1px solid var(--slate-200)">
     <div class="container">
