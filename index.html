@@ -51,6 +51,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=optional" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
@@ -418,6 +420,12 @@
       </div>
     </div>
   </section>
+  <!-- Morphing shape divider -->
+  <div class="morph-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path id="morphPath" d="M0,30 C360,60 720,0 1080,30 C1260,45 1350,15 1440,30 L1440,60 L0,60 Z" fill="var(--slate-50)" />
+    </svg>
+  </div>
   <!-- Built for -->
   <section class="section" style="background:var(--slate-50);border-top:1px solid var(--slate-200);border-bottom:1px solid var(--slate-200)">
     <div class="container">
@@ -876,6 +884,10 @@
       }).catch(()=>{});
     } catch(e){} })();
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

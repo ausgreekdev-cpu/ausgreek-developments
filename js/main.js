@@ -582,6 +582,21 @@ if (calcSliders.length) {
   updateCalc();
 }
 
+// Morphing shape divider
+const morphPath = document.getElementById('morphPath');
+if (morphPath) {
+  const shapes = [
+    'M0,30 C360,60 720,0 1080,30 C1260,45 1350,15 1440,30 L1440,60 L0,60 Z',
+    'M0,40 C360,10 720,50 1080,20 C1260,35 1350,50 1440,25 L1440,60 L0,60 Z',
+    'M0,20 C360,50 720,10 1080,40 C1260,25 1350,45 1440,35 L1440,60 L0,60 Z',
+  ];
+  let mi = 0;
+  setInterval(() => {
+    mi = (mi + 1) % shapes.length;
+    morphPath.setAttribute('d', shapes[mi]);
+  }, 3000);
+}
+
 // Real-time visitor counter
 const visitorCounter = document.getElementById('visitorCounter');
 if (visitorCounter) {
@@ -616,17 +631,31 @@ if (perfNums.length) {
   perfNums.forEach(el => perfObserver.observe(el));
 }
 
-// Code playground live preview
+// Code playground live preview (CodeMirror)
 const codeEditor = document.getElementById('codeEditor');
 const codePreview = document.getElementById('codePreview');
 if (codeEditor && codePreview) {
+  let editor = codeEditor;
+  if (window.CodeMirror) {
+    editor = CodeMirror.fromTextArea(codeEditor, {
+      mode: 'htmlmixed',
+      theme: 'dracula',
+      lineNumbers: true,
+      lineWrapping: true,
+    });
+  }
   function updatePreview() {
+    const code = (window.CodeMirror && editor.getValue) ? editor.getValue() : codeEditor.value;
     const doc = codePreview.contentDocument || codePreview.contentWindow.document;
     doc.open();
-    doc.write(codeEditor.value);
+    doc.write(code);
     doc.close();
   }
-  codeEditor.addEventListener('input', updatePreview);
+  if (window.CodeMirror && editor.on) {
+    editor.on('change', updatePreview);
+  } else {
+    codeEditor.addEventListener('input', updatePreview);
+  }
   updatePreview();
 }
 
