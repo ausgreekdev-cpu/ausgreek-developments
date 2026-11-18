@@ -359,7 +359,7 @@
         <h2>Technologies we use and recommend.</h2>
         <p>Adopt, trial, assess, hold — our honest take on the modern stack.</p>
       </div>
-      <div class="tech-radar-container reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:900px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:900px;margin:0 auto">
         <div style="background:#fff;border:1px solid var(--slate-200);border-radius:12px;padding:16px">
           <h4 style="font-size:13px;color:#15803d;margin-bottom:8px">✅ Adopt</h4>
           <p style="font-size:12px;color:var(--slate-600);line-height:1.8">React Native, Next.js, Supabase, Netlify, TypeScript, Tailwind, Stripe, PostgreSQL</p>
@@ -377,6 +377,24 @@
           <p style="font-size:12px;color:var(--slate-600);line-height:1.8">jQuery, PHP/Laravel, WordPress, Angular, MongoDB (for most use cases)</p>
         </div>
       </div>
+    </div>
+  </section>
+  <!-- Before/after slider -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Before & After</span>
+        <h2>From spreadsheets to software.</h2>
+        <p>Drag the slider to see the transformation.</p>
+      </div>
+      <div class="ba-slider reveal" id="baSlider" style="max-width:800px;margin:0 auto">
+        <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);height:320px;display:grid;place-items:center;font-size:24px;font-weight:700;color:#92400e">Before: Spreadsheets & Paper</div>
+        <div class="ba-before" id="baBefore" style="width:50%">
+          <div style="background:linear-gradient(135deg,#0f172a,#2563eb);height:320px;display:grid;place-items:center;font-size:24px;font-weight:700;color:#fff;width:200%">After: Custom Portal</div>
+        </div>
+        <div class="ba-handle" id="baHandle"></div>
+      </div>
+      <p style="text-align:center;margin-top:12px;font-size:12px;color:var(--slate-400)">Replace gradient placeholders with real before/after screenshots.</p>
     </div>
   </section>
   <!-- Open source showcase -->
